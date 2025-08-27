@@ -1,0 +1,117 @@
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+
+    .dashboard-content {
+        flex: 1;
+        padding: 20px;
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 1184px;
+            margin-right: 65px;
+
+            .dashboard-notification {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 50px;
+                margin: 0 23px;
+
+                .notification-icon {
+                    position: relative;
+                    margin-right: 12px;
+
+                    .bell-notification {
+                        font-size: 29px;
+                        cursor: pointer;
+                        margin-right: 1px;
+
+                    }
+
+                    .notification-badge {
+                        position: absolute;
+                        top: -5px;
+                        right: -5px;
+                        background: #fff;
+                        color: #ff0000;
+                        border-radius: 50%;
+                        border: #ff0000 solid 2px;
+                        width: 18px;
+                        height: 18px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 12px;
+                        box-shadow: 0 0 0 2px #fff;
+                    }
+                }
+
+                .user-profile {
+                    background-color: #6f787f;
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    position: relative;
+                    overflow: hidden;
+
+                    .user-dashboard {
+                        width: 50px;
+                        height: 50px;
+                        z-index: 1;
+                    }
+                }
+
+            }
+        }
+    }
+
+    .dashboard-sidebar {
+        width: 300px;
+
+        ul {
+            list-style: none;
+            margin-top: 120px;
+            padding: 0;
+
+            li {
+                margin-bottom: 15px;
+                margin-left: 15px;
+
+                a {
+                    display: block;
+                    padding: 12px 18px;
+                    text-decoration: none;
+                    position: relative;
+                    padding-left: 54px;
+
+                    &:hover {
+                        color: #007bff;
+                    }
+
+                    &.active {
+                        color: #2c7be5;
+                        font-weight: 600;
+                        background-color: #e7f1ff;
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 4px; 
+                            height: 100%;
+                            background-color: #2c7be5;
+                            border-radius: 2px; 
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+
+}

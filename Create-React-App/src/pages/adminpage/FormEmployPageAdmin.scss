@@ -1,0 +1,115 @@
+
+.container{
+    width: 1200px;
+    display: flex;
+
+    justify-content: center;
+    .container-form {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        min-height: 78vh;
+        margin-right: 165px;
+        position: fixed;
+        z-index: 1;
+        border-radius: 17px;
+        background-color: #fff;
+
+    
+        .Form{
+            z-index: 1;
+            height: 120px;
+        }
+    
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 4  00;
+        }
+    
+        .form-employ {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 70px;
+    
+            .form-row {
+                display: flex;
+                gap: 20px;
+    
+                .form-group {
+                    flex: 1;
+                    display: flex;
+                    margin: 10px 0px;
+                    flex-direction: column;
+    
+                    label {
+                        margin-bottom: 15px;
+                        font-weight: 500;
+                    }
+    
+                    input {
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+    
+            .form-group {
+                label {
+                    margin-bottom: 20px;
+                }
+    
+                input {
+                    width: 80%;
+                    padding: 8px 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                }
+    
+                .address {
+                    width: 40%;
+                }
+            }
+    
+            .form-actions {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 10px;
+    
+            }
+            button {
+                position: absolute;
+                padding: 9px 70px;
+                background-color: #2c7be5;
+                color: white;
+                border: none;
+                border-radius: 2px;
+                cursor: pointer;
+                margin-right: 76px;
+                margin-top: -13px;
+    
+                &:hover {
+                    background-color: #1a5fcc;
+                }
+            }
+        }
+    }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.form-popup {
+  position: fixed;
+  z-index: 1001;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}

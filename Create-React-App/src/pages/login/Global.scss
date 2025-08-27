@@ -1,0 +1,104 @@
+.container-login {
+    display: flex;
+    justify-content: center;
+    height: 80vh;
+    align-items: center;
+
+    .content-login {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgb(176, 176, 176);
+        padding: 20px;
+        border-radius: 5px;
+        width: 330px;
+
+        .back-button {
+            display: flex;
+            flex-direction: row;
+            height: 30px;
+
+            .btn-back {
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                font-size: 20px;
+            }
+
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+
+            a:hover {
+                color: #000;
+            }
+
+            a svg {
+                margin-bottom: -5px;
+                font-size: 1.4rem;
+            }
+
+            a span {
+                font-weight: 500;
+                margin-left: 5px;
+                font-size: 1rem;
+                padding-bottom: 1px;
+            }
+        }
+    }
+
+    .text-login {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        h2 {
+            margin: auto;
+            font-size: 1.8rem;
+            font-weight: 600;
+
+        }
+
+        span {
+            max-width: 250px;
+            text-align: center;
+            color: #6b717f;
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin: 30px 0 20px 0;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #6b717f;
+            box-shadow: 0 0 5px #6b717f;
+        }
+
+        .btn-next {
+            color: #fff;
+            background-color: #006aff;
+            margin-bottom: 12px;
+        }
+    }
+
+    p {
+        margin: auto;
+        color: #6b717f;
+        margin-bottom: 40px;
+    }
+
+    .footer-login {
+        margin-top: 10px;
+    }
+}
