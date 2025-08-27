@@ -101,19 +101,17 @@ EMAIL_PASS=....
 ---
 
 ## 🔹 Mô tả
-- Giao diện quản lí admin. Trang thái Inactive tức là tài khoản chưa được đăng nhập còn active thì đã được kích hoạt 
-  (screenshots/hinh2.jpg)
+![Giao diện quản lí admin. Trang thái Inactive tức là tài khoản chưa được đăng nhập còn active thì đã được kích hoạt](./screenshots/hinh2.jpg)
 
 ---
 ![Giao diện thêm một nhân viên thành công](./screenshots/hinh3.jpg)
 
 ---
-Giao diện chat Realtime dành cho admin
-(screenshots/hinh5.jpg)
+![Giao diện chat Realtime dành cho admin](./screenshots/hinh5.jpg)
 
 ---
-Giao diện chat Realtime dành cho nhân viên
-(screenshots/hinh6.jpg)
+![Giao diện chat Realtime dành cho nhân viên](./screenshots/hinh6.jpg)
+
 
 
 
