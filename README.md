@@ -2,7 +2,7 @@
 # Employee Management & Realtime Chat System
 
 Một ứng dụng **React + Vite** cho phép **admin quản lý nhân viên** với tính năng đăng nhập qua số điện thoại, xác thực OTP, thêm/xóa nhân viên, và chat realtime với nhiều nhân viên.
-
+(screenshots/hinh1.png)
 ---
 
 ## 🔹 Tính năng chính
