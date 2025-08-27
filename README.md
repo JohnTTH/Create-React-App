@@ -27,8 +27,9 @@ Một ứng dụng **React + Vite** cho phép **admin quản lý nhân viên** v
 - **Frontend:** React, Vite, SCSS, React Icons.
 - **Realtime Chat:** Socket.io.
 - **Backend:** Node.js + Express (API quản lý nhân viên, gửi OTP, chat).
-- **Database:** Firebase Firestore (hoặc MongoDB / SQL tùy triển khai).
-- **Xác thực:** OTP qua số điện thoại (Twilio, Vonage, hoặc Firebase Authentication).
+- **Database:** Firebase Firestore .
+- **Xác thực:** OTP qua số điện thoại (Twilio).
+  **Xác thực:** OTP qua email (nodemailer).
 - **Environment variables:** `.env` để lưu các key API, token OTP, secret JWT.
 
 ---
@@ -37,22 +38,19 @@ Một ứng dụng **React + Vite** cho phép **admin quản lý nhân viên** v
 
 ```
 src/
-├─ components/       # Các component UI chung
-├─ pages/            # Các trang: Dashboard, Message, Login
-├─ services/         # Gọi API, Socket
+├─ Redux/            # Lưu lại các giá trị tạm thời qua từng trang
+├─ pages/            # Các trang: Dashboard, Message, Login kèm theo scss
 ├─ store/            # Redux hoặc Context
 ├─ App.jsx
-├─ main.jsx
-└─ styles/           # SCSS, theme
+└─ main.jsx
 ```
 
 Backend (Node.js / Express):
 ```
-server/
-├─ routes/           # Các route: auth, employee, chat
-├─ controllers/      # Logic xử lý
-├─ models/           # Model dữ liệu
-└─ index.js          # Server entry
+nodejs/
+├─ config.js                        # Setup Firebase
+├─ serviceAccountKey.json           # Api key
+└─ index.js                         # Server và controller xử lí logic
 ```
 
 ---
@@ -67,25 +65,27 @@ cd project-name
 
 2. Cài đặt frontend:
 ```bash
-cd frontend
-npm install
+cd Create-React-App
 npm run dev
 ```
 
 3. Cài đặt backend:
 ```bash
 cd backend
-npm install
-npm run dev
+npm install bcrypt@^6.0.0 cookie-parser@^1.4.7 cors@^2.8.5 dotenv@^17.2.1 express@^5.1.0 firebase@^12.1.0 firebase-admin@^13.4.0 jsonwebtoken@^9.0.2 nodemailer@^7.0.5 nodemon@^3.1.10 socket.io@^4.8.1 socket.io-client@^4.8.1 twilio@^5.8.0
+nodemon index.js
 ```
 
 4. Thêm file `.env` với các biến môi trường cần thiết:
 ```
-PORT=4000
-FIREBASE_API_KEY=...
-TWILIO_ACCOUNT_SID=...
+JWT_SECRET=....
+
+TWILIO_ACCOUNT_SID=....
 TWILIO_AUTH_TOKEN=...
-JWT_SECRET=...
+TWILIO_PHONE_NUMBER=... 
+
+EMAIL_USER=...
+EMAIL_PASS=....
 ```
 
 5. Truy cập ứng dụng trên: `http://localhost:5173` (frontend Vite)
@@ -96,11 +96,11 @@ JWT_SECRET=...
 
 - Đảm bảo backend đang chạy trước khi frontend gọi API.
 - Realtime chat yêu cầu kết nối Socket.io đến backend.
-- OTP gửi qua SMS yêu cầu cài đặt Twilio hoặc Firebase Authentication.
+- OTP gửi qua SMS yêu cầu cài đặt Twilio.
+- OPT gửi qua mail yêu cầu cài đặt nodemailer
 
 ---
 
 ## 🔹 License
-
-Project này được phát triển phục vụ mục đích học tập / demo.
+"# Create-React-App" 
 "# Create-React-App" 
