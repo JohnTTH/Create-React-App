@@ -105,8 +105,7 @@ EMAIL_PASS=....
   (screenshots/hinh2.jpg)
 
 ---
-Giao diện thêm một nhân viên thành công 
-(screenshots/hinh3.jpg)
+![Giao diện thêm một nhân viên thành công](./screenshots/hinh3.jpg)
 
 ---
 Giao diện chat Realtime dành cho admin
