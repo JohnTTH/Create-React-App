@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./FormEmployPageAdmin.scss";
+import "../style/FormEmployPageAdmin.scss";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -25,15 +25,17 @@ function FormEmployPageAdmin({ setOpenForm, onAdd }) {
             const res = await axios.post("http://localhost:4000/CreateEmployee", newEmployee);
             setNewEmployee(res);
             toast.success("Thêm một nhân viên thành công");
+            
             if (onAdd) {
                 onAdd({ id: res.data.employeeId, ...newEmployee, used: false });
             }
+
             setTimeout(() => {
                 setOpenForm(false);
             }, 3000);
-        } catch (err) {
-            toast.error("Không thể tạo nhân viên");
-
+        } catch(err) {
+            const reqS = JSON.stringify(err.response.data.message);
+            toast.error(`${reqS.slice(1, -1)}`);
         }
     };
 

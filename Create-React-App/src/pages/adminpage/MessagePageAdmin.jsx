@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import DashboardPage from "./DashboardPage";
-import "./MessagePageAdmin.scss";
+import "../style/MessagePage.scss";
 import { FaUserCircle } from "react-icons/fa";
 import axios from "axios";
 import io from "socket.io-client";
@@ -42,7 +42,7 @@ function MessagePageAdmin() {
         fetchEmployeesAndLatest();
 
         socket.on("receive_message", (data) => {
-            const employeeId = data.room.split("_")[1];
+            const roomid = data.room.split("_")[1];
 
             if (data.room === currentRoom) {
                 setMessages((prev) => [...prev, data]);
@@ -50,7 +50,7 @@ function MessagePageAdmin() {
 
             setEmployee((prev) =>
                 prev.map((emp) =>
-                    emp.id === employeeId ? { ...emp, latestMessage: data } : emp
+                    emp.id === roomid ? { ...emp, latestMessage: data } : emp
                 )
             );
         });
@@ -79,7 +79,7 @@ function MessagePageAdmin() {
             room: currentRoom,
             author: "Admin",
             message: currentMessage,
-            time: new Date().toLocaleTimeString(),
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         };
 
         socket.emit("send_message", data);

@@ -1,6 +1,6 @@
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import "./Global.scss"
+import "../style/Global.scss"
 import { useState } from "react";
 import { setEmail } from "../../redux/emailSlice";
 import axios from "axios";
@@ -27,11 +27,16 @@ function LoginPageEmail() {
         try {
             const res = await axios.post("http://localhost:4000/login-email", dataEmail);
             setDataEmail({ email: "" });
-            toast.success("Gửi thành Công");
+
+            toast.success("Gửi OTP thành Công");
+            
             dispatch(setEmail(dataEmail.email));
-            navigate("/confirm-email");
-        } catch (err) {
-            toast.error(err);
+
+            setTimeout(() => {
+                navigate("/confirm-email");
+            }, 3000);
+        } catch{
+            toast.error("Lỗi không gửi được OTP");
         }
     };
 

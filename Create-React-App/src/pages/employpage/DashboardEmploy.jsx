@@ -1,4 +1,4 @@
-import "./Dashboard.scss";
+import "../style/Dashboard.scss";
 import { HiOutlineBell,HiUser } from "react-icons/hi2";
 import { NavLink } from "react-router-dom";
 

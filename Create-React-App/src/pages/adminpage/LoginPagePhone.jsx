@@ -1,11 +1,11 @@
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setPhone } from "../../redux/phoneSlice";
-import firebase from "../../firebase";
-import "./Global.scss"
+import "../style/Global.scss"
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 function LoginPagePhone() {
     const dispatch = useDispatch();
@@ -28,10 +28,12 @@ function LoginPagePhone() {
             const res = await axios.post("http://localhost:4000/login-phone", getPhone);
             setGetPhone({ phone: "" });
             dispatch(setPhone(getPhone.phoneNumber));
-            console.log(res.data)
-            navigate("/confirm-phone");
-        } catch (err) {
-            console.error(err);
+            toast.success("Gửi OTP thành công");
+            setTimeout(() => {
+                navigate("/confirm-phone");
+            }, 3000);
+        } catch {
+            toast.error("Lỗi không gửi được OTP");
         }
     };
 
@@ -65,6 +67,17 @@ function LoginPagePhone() {
                 </div>
                 <div id="sign-in-button"></div>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </div>
     );
 }

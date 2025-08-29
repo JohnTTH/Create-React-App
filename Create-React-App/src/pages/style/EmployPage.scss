@@ -45,6 +45,10 @@
             .btn-Fillter-employee:focus {
                 outline: none;
                 border-color: #2c7be5;
+                color: #2c7be5;
+                svg{
+                    color: #2c7be5;
+                }
             }
 
             .btn-Fillter-employee {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardPage from "./DashboardPage";
-import "./EmployPage.scss";
+import "../style/EmployPage.scss";
 import { GoPlus } from "react-icons/go";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import FormEmployPageAdmin from "./FormEmployPageAdmin";

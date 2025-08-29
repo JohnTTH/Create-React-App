@@ -1,15 +1,15 @@
 import {Routes, Route } from "react-router-dom";
-import LoginPagePhone from "./pages/login/LoginPagePhone";
-import LoginPageEmail from "./pages/login/LoginPageEmail";
-import ConfirmPageEmail from "./pages/login/ConfirmPageEmail";
-import ConfirmPagePhone from "./pages/login/ConfirmPagePhone";
+import LoginPagePhone from "./pages/adminpage/LoginPagePhone";
+import ConfirmPagePhone from "./pages/adminpage/ConfirmPagePhone";
 import DashboardPage from "./pages/adminpage/DashboardPage";
-import EmployPageAmin from "./pages/adminpage/EmployPageAmin";
-import FormEmployPageAdmin from "./pages/adminpage/FormEmployPageAdmin";
 import MessagePageAdmin from "./pages/adminpage/MessagePageAdmin";
-import MessageEmploy from "./pages/adminpage/MessPageEmploy";
 import TaskManager from "./pages/adminpage/TaskManagerPage";
-import DashboardEmploy from "./pages/adminpage/DashboardEmploy";
+import FormEmployPageAdmin from "./pages/adminpage/FormEmployPageAdmin";
+import EmployPageAmin from "./pages/adminpage/EmployPageAmin";
+import ConfirmPageEmail from "./pages/employpage/ConfirmPageEmail";
+import LoginPageEmail from "./pages/employpage/LoginPageEmail";
+import MessageEmploy from "./pages/employpage/MessPageEmploy";
+import DashboardEmploy from "./pages/employpage/DashboardEmploy";
 
 function App() {
   return (

@@ -1,9 +1,10 @@
 import { BsArrowLeft } from "react-icons/bs";
-import "./Global.scss"
+import "../style/Global.scss"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 function ConfirmPageEmail() {
 
@@ -24,7 +25,6 @@ function ConfirmPageEmail() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // 1. Xác thực OTP
             const resValidate = await axios.post(
                 "http://localhost:4000/validate-access-code",
                 newCode
@@ -40,14 +40,18 @@ function ConfirmPageEmail() {
 
             const { jwt, user } = resSession.data;
 
-            // 3. Lưu JWT và thông tin user  
+            // Lưu JWT và thông tin nhân viên
             localStorage.setItem("jwt", jwt);
             localStorage.setItem("userId", user.id);
 
             setNewCode({ code: "", email: email });
-            navigate("/messemploy");
+
+            toast.success("Xác thực OTP thành công");
+            setTimeout(() => {
+                navigate("/messemploy");
+            }, 3000);
         } catch (err) {
-            console.error(err);
+            toast.error("Xác thực OTP thất bại");
         }
     };
 
@@ -74,6 +78,17 @@ function ConfirmPageEmail() {
                     <a href="#">Send again</a>
                 </div>
             </div>
+                        <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </div>
     );
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import io from "socket.io-client";
 import DashboardEmploy from "./DashboardEmploy";
-import "./MessagePageAdmin.scss";
+import "../style/MessagePage.scss";
 import { FaUserCircle } from "react-icons/fa";
 
 const socket = io.connect("http://localhost:4000");
@@ -28,7 +28,7 @@ function MessageEmploy() {
                 if (!admins) return;
 
                 const getmessAdmins = await Promise.all(
-                    admins.map(async (admin) => {
+                    admins.map( async (admin) => {
                         const room = `${admin.id}_${userId}`;
                         try {
                             const res = await axios.get(`http://localhost:4000/GetMessages/${room}`);
@@ -95,7 +95,7 @@ function MessageEmploy() {
             room: currentRoom,
             author: "Employee",
             message: currentMessage,
-            time: new Date().toLocaleTimeString(),
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         };
 
         socket.emit("send_message", data);
