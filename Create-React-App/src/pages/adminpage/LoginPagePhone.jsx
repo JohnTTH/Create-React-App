@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setPhone } from "../../redux/phoneSlice";
 import "../style/Global.scss"
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { loginWithPhone } from "../api/authApi";
 
 function LoginPagePhone() {
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function LoginPagePhone() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:4000/login-phone", getPhone);
+            await loginWithPhone(getPhone);
             setGetPhone({ phone: "" });
             dispatch(setPhone(getPhone.phoneNumber));
             toast.success("Gửi OTP thành công");

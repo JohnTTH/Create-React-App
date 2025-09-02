@@ -1,32 +1,34 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import DashboardPage from "./DashboardPage";
 import "../style/EmployPage.scss";
 import { GoPlus } from "react-icons/go";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import FormEmployPageAdmin from "./FormEmployPageAdmin";
 import { ToastContainer, toast } from "react-toastify";
+import { getEmployees, deleteEmployee } from "../api/employeeApi";
 
 function EmployPageAmin() {
     const [openForm, setOpenForm] = useState(false);
     const [user, setUsers] = useState([]);
 
+    const fetchData = async () => {
+        try {
+            const employees = await getEmployees();
+            setUsers(employees);
+        } catch (err) {
+            console.error(err);
+        }
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get("http://localhost:4000/GetEmployee/Employee");
-                setUsers(res.data.employees);
-            } catch (err) {
-                console.error(err);
-            }
-        };
 
         fetchData();
     }, []);
 
     const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa nhân viên này không?");
+        if (!confirmDelete) return;
         try {
-            await axios.delete(`http://localhost:4000/DeleteEmployee/${id}`);
+            await deleteEmployee(id);
             toast.success("Xóa thành công")
             setUsers((prev) => prev.filter((item) => item.id !== id));
         } catch (err) {
@@ -41,10 +43,14 @@ function EmployPageAmin() {
                     <>
                         <div
                             className="overlay"
-                            onClick={() => setOpenForm(false)}
+                            onClick={() => { setOpenForm(false); fetchData(); }}
+
                         ></div>
                         <div className="form-popup">
-                            <FormEmployPageAdmin setOpenForm={setOpenForm} />
+                            <FormEmployPageAdmin
+                                setOpenForm={setOpenForm}
+                                onAdd={fetchData}
+                            />
                         </div>
                     </>
                 )}

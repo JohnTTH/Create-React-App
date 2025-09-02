@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "../style/Global.scss"
 import { useState } from "react";
 import { setEmail } from "../../redux/emailSlice";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { loginWithEmail } from "../api/authApi";
 
 function LoginPageEmail() {
 
@@ -25,13 +25,10 @@ function LoginPageEmail() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:4000/login-email", dataEmail);
+            await loginWithEmail(dataEmail);
             setDataEmail({ email: "" });
-
             toast.success("Gửi OTP thành Công");
-            
             dispatch(setEmail(dataEmail.email));
-
             setTimeout(() => {
                 navigate("/confirm-email");
             }, 3000);
@@ -39,7 +36,6 @@ function LoginPageEmail() {
             toast.error("Lỗi không gửi được OTP");
         }
     };
-
 
     return (
         <div className="container-login">

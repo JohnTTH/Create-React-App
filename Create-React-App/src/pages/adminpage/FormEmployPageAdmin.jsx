@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../style/FormEmployPageAdmin.scss";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { createEmployee } from "../api/employeeApi";
 
 function FormEmployPageAdmin({ setOpenForm, onAdd }) {
     const [newEmployee, setNewEmployee] = useState({
@@ -22,19 +22,25 @@ function FormEmployPageAdmin({ setOpenForm, onAdd }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:4000/CreateEmployee", newEmployee);
+            const res = await createEmployee(newEmployee);
             setNewEmployee(res);
             toast.success("Thêm một nhân viên thành công");
-            
-            if (onAdd) {
-                onAdd({ id: res.data.employeeId, ...newEmployee, used: false });
-            }
+
+            if (onAdd) onAdd();
+
+            setNewEmployee({
+                name: "",
+                phone: "",
+                email: "",
+                role: "",
+                address: ""
+            });
 
             setTimeout(() => {
                 setOpenForm(false);
             }, 3000);
-        } catch(err) {
-            const reqS = JSON.stringify(err.response.data.message);
+        } catch (err) {
+            const reqS = JSON.stringify(err.response?.data?.message || "Lỗi không xác định");
             toast.error(`${reqS.slice(1, -1)}`);
         }
     };
@@ -74,7 +80,7 @@ function FormEmployPageAdmin({ setOpenForm, onAdd }) {
                     </div>
 
                     <div className="form-actions">
-                        <button type="submit" onClick={(e) => handleSubmit(e)}>Create</button>
+                        <button type="submit">Create</button>
                     </div>
                 </form>
             </div>

@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import DashboardPage from "./DashboardPage";
 import "../style/MessagePage.scss";
 import { FaUserCircle } from "react-icons/fa";
-import axios from "axios";
 import io from "socket.io-client";
+import { getEmployees, getMessagesByRoom } from "../api/messageApi";
+import { API_BASE } from "../../../src/config.js";
 
-const socket = io.connect("http://localhost:4000");
+const socket = io.connect(API_BASE);
 
 function MessagePageAdmin() {
     const [employee, setEmployee] = useState([]);
@@ -17,17 +18,15 @@ function MessagePageAdmin() {
     useEffect(() => {
         const fetchEmployeesAndLatest = async () => {
             try {
-                const res = await axios.get("http://localhost:4000/GetEmployee/Employee");
-                const employees = res.data.employees;
-
+                const res = await getEmployees();
+                const employees = res;
                 const getMess = await Promise.all(
                     employees.map(async (emp) => {
                         const room = `${userId}_${emp.id}`;
                         try {
-                            const res = await axios.get(`http://localhost:4000/GetMessages/${room}`);
-                            return { ...emp, latestMessage: res.data.latest || null };
+                            const res = await getMessagesByRoom(room);
+                            return { ...emp, latestMessage: res.latest || null };
                         } catch (err) {
-                            console.log(err);
                             return { ...emp, latestMessage: null };
                         }
                     })
@@ -64,8 +63,8 @@ function MessagePageAdmin() {
         socket.emit("join_room", { room });
 
         try {
-            const res = await axios.get(`http://localhost:4000/GetMessages/${room}`);
-            setMessages(Array.isArray(res.data.messages) ? res.data.messages : []);
+            const res = await getMessagesByRoom(room);
+            setMessages(Array.isArray(res.messages) ? res.messages : []);
         } catch (err) {
             console.log(err);
         }

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import io from "socket.io-client";
 import DashboardEmploy from "./DashboardEmploy";
 import "../style/MessagePage.scss";
 import { FaUserCircle } from "react-icons/fa";
+import { API_BASE } from "../../config";
+import { getMessagesByRoom,getAdmin } from "../api/messageApi";
 
-const socket = io.connect("http://localhost:4000");
+const socket = io.connect(API_BASE);
 
 function MessageEmploy() {
     const [currentMessage, setCurrentMessage] = useState([]);
@@ -14,25 +15,21 @@ function MessageEmploy() {
     const [dataEmploye, setDataEmploye] = useState([]);
     const userId = localStorage.getItem("userId");
 
-    // Lấy danh sách admin và latestMessage
     useEffect(() => {
         const fetchAdminsAndMessages = async () => {
             try {
-                const jwt = localStorage.getItem("jwt");
-                const res = await axios.get(
-                    "http://localhost:4000/GetEmployee/admin",
-                    { headers: { Authorization: `Bearer ${jwt}` } }
-                );
+                
+                const res = await getAdmin();
 
-                const admins = res.data.employees;
+                const admins = res;
                 if (!admins) return;
 
                 const getmessAdmins = await Promise.all(
                     admins.map( async (admin) => {
                         const room = `${admin.id}_${userId}`;
                         try {
-                            const res = await axios.get(`http://localhost:4000/GetMessages/${room}`);
-                            return { ...admin, latestMessage: res.data.latest || null };
+                            const res = await getMessagesByRoom(room);
+                            return { ...admin, latestMessage: res.latest || null };
                         } catch (err) {
                             console.log(err);
                             return { ...admin, latestMessage: null };
@@ -43,12 +40,12 @@ function MessageEmploy() {
                 setDataEmploye(getmessAdmins);
 
                 if (getmessAdmins.length > 0) {
-                    const firstRoom = `${getmessAdmins[0].id}_${userId}`;
+                    const room = `${getmessAdmins[0].id}_${userId}`;
                     setCurrentRoom(firstRoom);
-                    socket.emit("join_room", { room: firstRoom });
+                    socket.emit("join_room", { room: room });
 
-                    const res = await axios.get(`http://localhost:4000/GetMessages/${firstRoom}`);
-                    setMessages( res.data.messages);
+                    const res = await getMessagesByRoom(room);
+                    setMessages( res.messages);
                 }
 
             } catch (err) {
@@ -81,8 +78,8 @@ function MessageEmploy() {
         socket.emit("join_room", { room });
 
         try {
-            const res = await axios.get(`http://localhost:4000/GetMessages/${room}`);
-            setMessages(Array.isArray(res.data.messages) ? res.data.messages : []);
+            const res = await getMessagesByRoom(room);
+            setMessages(Array.isArray(res.messages) ? res.messages : []);
         } catch (err) {
             console.log(err);
         }

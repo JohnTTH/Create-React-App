@@ -2,9 +2,9 @@ import { BsArrowLeft } from "react-icons/bs";
 import "../style/Global.scss"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import {  loginWithEmail,validateAccessCodeEmail, loginSessionEmail } from "../api/authApi";
 
 function ConfirmPageEmail() {
 
@@ -14,6 +14,21 @@ function ConfirmPageEmail() {
         code: "",
         email: email,
     })
+    const [dataEmail, setDataEmail] = useState({
+        email: email,
+    })
+
+    const handelsend = async (e) => {
+        e.preventDefault();
+        try {
+            loginWithEmail(dataEmail);
+            setDataEmail({ email: email });
+
+            toast.success("Gửi OTP thành Công");
+        } catch {
+            toast.error("Lỗi không gửi được OTP");
+        }
+    }
 
     const handleChange = (e) => {
         setNewCode({
@@ -25,22 +40,10 @@ function ConfirmPageEmail() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const resValidate = await axios.post(
-                "http://localhost:4000/validate-access-code",
-                newCode
-            );
+            const { email, token } = await validateAccessCodeEmail(newCode);
 
-            const { email, token } = resValidate.data;
+            const { jwt, user } = await loginSessionEmail({ email, token });
 
-            // 2. Tạo session JWT
-            const resSession = await axios.post(
-                "http://localhost:4000/login-session",
-                { email, token }
-            );
-
-            const { jwt, user } = resSession.data;
-
-            // Lưu JWT và thông tin nhân viên
             localStorage.setItem("jwt", jwt);
             localStorage.setItem("userId", user.id);
 
@@ -75,10 +78,10 @@ function ConfirmPageEmail() {
                 </form>
                 <div className="footer-login">
                     <span>Code not receive? </span>
-                    <a href="#">Send again</a>
+                    <a href="#" onClick={(e) => handelsend(e)}>Send again</a>
                 </div>
             </div>
-                        <ToastContainer
+            <ToastContainer
                 position="top-right"
                 autoClose={3000}
                 hideProgressBar={false}

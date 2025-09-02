@@ -2,12 +2,15 @@ import "../style/Global.scss"
 import { BsArrowLeft } from "react-icons/bs";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { loginWithPhone,validateAccessCodePhone, loginSessionPhone } from "../api/authApi"; 
 
 function ConfirmPagePhone() {
     const phone = useSelector((state) => state.phone.value);
+        const [dataPhone, setDataPhone] = useState({
+        phoneNumber: phone,
+    })
     const navigate = useNavigate();
     const [newcode, setNewCode] = useState({
         phone: phone,
@@ -21,24 +24,24 @@ function ConfirmPagePhone() {
         });
     };
 
+        const handleSendPhone = async (e) => {
+            e.preventDefault();
+            try {
+                await loginWithPhone(dataPhone);
+                setDataPhone({ phoneNumber: phone });
+                toast.success("Gửi OTP thành công");
+            } catch {
+                toast.error("Lỗi không gửi được OTP");
+            }
+        };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const resValidate = await axios.post(
-                "http://localhost:4000/validate-access-code-phone",
-                newcode
-            );
+            const { phone, token } = await validateAccessCodePhone(newcode);
 
-            const { phone, token } = resValidate.data;
+            const { jwt, user } = await loginSessionPhone({ phone, token });
 
-            const resSession = await axios.post(
-                "http://localhost:4000/login-session-phone",
-                { phone, token }
-            );
-
-            const { jwt, user } = resSession.data;
-
-            // Lưu JWT và thông tin user  
             localStorage.setItem("jwt", jwt);
             localStorage.setItem("idadmin", user.id);
             setNewCode({ code: "", phone: phone });
@@ -71,7 +74,7 @@ function ConfirmPagePhone() {
                 </form>
                 <div className="footer-login">
                     <span>Code not receive?</span>
-                    <a href="#">Send again</a>
+                    <a href="#" onClick={(e)=> handleSendPhone(e)}>Send again</a>
                 </div>
             </div>
             <div id="recaptcha-container"></div>

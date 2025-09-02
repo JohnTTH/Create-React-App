@@ -32,6 +32,13 @@ app.post("/login-phone", async (req, res) => {
             return res.status(400).json({ success: false, message: "Thiếu số điện thoại" });
         }
 
+        // if (!phoneNumber.startsWith("+")) {
+        //     if (phoneNumber.startsWith("0")) {
+        //         phoneNumber = phoneNumber.substring(1);
+        //     }
+        //     phoneNumber = "+18" + phoneNumber;
+        // }
+
         function generateOTP() {
             return Math.floor(100000 + Math.random() * 900000).toString();
         }
@@ -55,6 +62,61 @@ app.post("/login-phone", async (req, res) => {
         return res.status(500).json({ success: false, message: "Server lỗi", error: err.message });
     }
 });
+
+// app.post("/login-phone", async (req, res) => {
+//     try {
+//         let { phoneNumber, countryCode } = req.body; 
+
+//         if (!phoneNumber || !countryCode) {
+//             return res.status(400).json({ success: false, message: "Thiếu số điện thoại hoặc mã quốc gia" });
+//         }
+
+//         // Nếu số bắt đầu bằng 0 thì bỏ đi (thường số cục bộ ở VN, JP...)
+//         if (phoneNumber.startsWith("0")) {
+//             phoneNumber = phoneNumber.substring(1);
+//         }
+
+//         // Ghép thành số quốc tế chuẩn
+//         phoneNumber = countryCode + phoneNumber;
+
+//         function generateOTP() {
+//             return Math.floor(100000 + Math.random() * 900000).toString();
+//         }
+
+//         const code = generateOTP();
+//         const token = crypto.randomBytes(16).toString("hex");
+//         const createdAt = new Date();
+//         const expiresAt = new Date(createdAt.getTime() + 5 * 60 * 1000);
+
+//         await db.collection("AccessCodes").doc(phoneNumber).set({
+//             code,
+//             token,
+//             createdAt,
+//             expiresAt
+//         });
+
+//         await client.messages.create({
+//             body: `Mã OTP của bạn là ${code}`,
+//             from: process.env.TWILIO_PHONE_NUMBER,
+//             to: phoneNumber
+//         });
+
+//         return res.json({ 
+//             success: true, 
+//             message: "Gửi OTP thành công", 
+//             phoneNumber, 
+//             token 
+//         });
+
+//     } catch (err) {
+//         return res.status(500).json({ 
+//             success: false, 
+//             message: "Server lỗi", 
+//             error: err.message 
+//         });
+//     }
+// });
+
 
 app.post("/validate-access-code-phone", async (req, res) => {
     try {
